@@ -26,6 +26,15 @@
 
 /// <reference types="Cypress" />
 
+
+///Cadastro
+const register = '[data-test="login-register"]'
+const nameCa = '[data-test="register-name"] > .MuiInputBase-root > .MuiInputBase-input'
+const emailCad = '[data-test="register-email"] > .MuiInputBase-root > .MuiInputBase-input'
+const passwordCad = '[data-test="register-password"] > .MuiInputBase-root > .MuiInputBase-input'
+const passw0rdCad2 ='[data-test="register-password2"] > .MuiInputBase-root > .MuiInputBase-input'
+const registerCadsubmit ='[data-test="register-submit"]'
+//perfil
 const Welcome = '[data-test="dashboard-welcom'
 const CreateProfile = '[data-test="dashboard-createProfile'
 const SelectStatus = '#mui-component-select-status'
@@ -46,21 +55,24 @@ Cypress.Commands.add('navigate', (route) => {
 
 
 
-Cypress.Commands.add("login", (email, senha) => {   cy.get('[data-test="login-email"] > .MuiInputBase-root > .MuiInputBase-input').type(email)
-cy.get('[data-test="login-password"] > .MuiInputBase-root > .MuiInputBase-input').type(senha)
-cy.get('[data-test="login-submit"]').click()
- })
-
-Cypress.Commands.add("cadastro", (nome, email, senha, senha2) => {     cy.get('[data-test="login-register"]').click() 
-cy.get('[data-test="register-name"] > .MuiInputBase-root > .MuiInputBase-input').type(nome)
-cy.get('[data-test="register-email"] > .MuiInputBase-root > .MuiInputBase-input').type(email)
-cy.get('[data-test="register-password"] > .MuiInputBase-root > .MuiInputBase-input').type(senha)
-cy.get('[data-test="register-password2"] > .MuiInputBase-root > .MuiInputBase-input').type(senha2)
-cy.get('[data-test="register-submit"]').click() 
+Cypress.Commands.add("login", (email, senha) => {
+    cy.visit('login')             
+    cy.get('[data-test="login-email"] > .MuiInputBase-root > .MuiInputBase-input').type(email)
+    cy.get('[data-test="login-password"] > .MuiInputBase-root > .MuiInputBase-input').type(senha)
+    cy.get('[data-test="login-submit"]').click()
 })
 
-Cypress.Commands.add("perfil", (staus, status2, empresa, site, cidade, conhecimento, git ) => { 
-  
+Cypress.Commands.add("cadastro", (nome, email, senha, senha2) => {
+    cy.get(register).click()
+    cy.get(nameCa).type(nome)
+    cy.get(emailCad).type(email)
+    cy.get(passwordCad).type(senha)
+    cy.get(passw0rdCad2).type(senha2)
+    cy.get(registerCadsubmit).click()
+})
+
+Cypress.Commands.add("perfil", (staus, status2, empresa, site, cidade, conhecimento, git) => {
+
     cy.get(CreateProfile).click()
     cy.get(SelectStatus).type(staus)
     cy.get(Status2).type(status2)
@@ -72,6 +84,6 @@ Cypress.Commands.add("perfil", (staus, status2, empresa, site, cidade, conhecime
     cy.get(BotaoSubmit).click()
     cy.get(PerfilCriado).should('contain', 'Perfil Criado')
 
- })
+})
 
 
